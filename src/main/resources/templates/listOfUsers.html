@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Usuarios</title>
+    <style>
+      /* Asegurar que el body y el HTML usen toda la pantalla */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Ajustar el contenedor principal para centrar la tabla */
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Centra verticalmente */
+        align-items: center; /* Centra horizontalmente */
+        background-color: #f4f4f4;
+      }
+
+      /* Título */
+      h2 {
+        color: #333;
+        font-size: 26px;
+        margin-bottom: 15px;
+      }
+
+      /* Contenedor de la tabla */
+      .table-container {
+        width: 90%;
+        height: 80vh; /* Asegurar que la tabla se ajuste a la pantalla */
+        max-height: 80vh; /* Evitar que sobrepase el viewport */
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        background: white;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Tabla */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        flex: 1;
+      }
+
+      /* Encabezado fijo con sombra */
+      thead {
+        position: sticky;
+        top: 0;
+        background-color: #4c53af;
+        z-index: 10;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Columnas */
+      th,
+      td {
+        padding: 16px;
+        text-align: left;
+        font-size: 18px;
+      }
+
+      /* Estilos para encabezados */
+      th {
+        background-color: #6666dc;
+        color: white;
+        font-weight: bold;
+      }
+
+      /* Bordes y altura de celdas */
+      td {
+        border-bottom: 1px solid #ddd;
+      }
+
+      /* Ajuste de altura de filas */
+      tbody tr {
+        vertical-align: inherit;
+        unicode-bidi: isolate;
+        border-color: inherit;
+      }
+
+      /* Filas alternas con color */
+      tbody tr:nth-child(even) {
+        background-color: #f4f4f4;
+      }
+
+      tbody tr:hover {
+        background-color: #dfdfdf;
+      }
+
+      /* Ajuste del scroll en tbody */
+      tbody {
+        display: block;
+        height: calc(80vh - 80px); /* Ajuste dinámico */
+        overflow-y: auto;
+      }
+
+      /* Ajuste para mantener las columnas alineadas */
+      thead,
+      tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+
+      /* Estilos para roles */
+      .role-admin {
+        background-color: #188100; /* Rojo oscuro */
+        color: white;
+        /* padding: 5px 12px; */
+        border-radius: 5px;
+        font-weight: bold;
+      }
+
+      .role-user {
+        background-color: #ffcc80; /* Naranja */
+        color: black;
+        padding: 5px 12px;
+        border-radius: 5px;
+        font-weight: bold;
+        size: 1px;
+      }
+
+      /* Ajuste para que el <ul> no aumente la altura de la fila */
+      td ul {
+        display: inline-flex; /* Hace que los elementos <li> se alineen en línea */
+        padding: 0;
+        margin: 0; /* Evita que el <ul> agregue espacio extra */
+        list-style: none; /* Elimina los puntos de lista */
+      }
+
+      /* Ajuste de los <li> dentro del <ul> */
+      td ul li {
+        background-color: #ffcc80;
+        color: #333;
+        padding: 2px 6px; /* Padding reducido */
+        border-radius: 5px;
+        margin: 0 2px; /* Evita margen superior/inferior */
+        font-size: 12px; /* Tamaño de fuente más pequeño */
+        font-weight: bold;
+        display: inline-block; /* Evita que los <li> ocupen toda la línea */
+        line-height: normal; /* Ajusta la altura de línea */
+      }
+
+      /* Ajuste de altura de las filas */
+      tbody tr {
+        height: 40px; /* Ajusta según sea necesario */
+      }
+
+      /* Estado de usuario */
+      .enabled {
+        color: green;
+        font-weight: bold;
+      }
+
+      .disabled {
+        color: red;
+        font-weight: bold;
+      }
+      .button {
+        display: inline-block;
+        padding: 12px 20px;
+        margin: 10px;
+        font-size: 16px;
+        text-decoration: none;
+        color: white;
+        background-color: #4caf50;
+        border-radius: 5px;
+        transition: 0.3s;
+      }
+
+      .button:hover {
+        background-color: #388e3c;
+      }
+    </style>
+  </head>
+  <body style="height: 100%">
+    <h2>Lista de Usuarios</h2>
+
+    <div class="table-container">
+      <table id="usersTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Roles</th>
+            <th>Habilitado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí se insertarán los datos dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+    <script>
+      const API_URL = "http://127.0.0.1:8080/api/users";
+
+      async function fetchUsers() {
+        try {
+          const response = await fetch(API_URL);
+          if (!response.ok) throw new Error("Error al obtener los datos");
+
+          const users = await response.json();
+          const tbody = document.querySelector("#usersTable tbody");
+          tbody.innerHTML = ""; // Limpiar antes de agregar nuevos datos
+
+          users.forEach((user) => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+    <td>${user.id}</td>
+    <td>${user.username}</td>
+    <td>
+        <ul>
+            ${
+              user.roles.some((role) => role.name === "ROLE_ADMIN")
+                ? '<li class="role-admin">ROLE_ADMIN</li>' // Resaltado para admin
+                : '<li class="role-user">ROLE_USER</li>' // Diferente color para user
+            }
+        </ul>
+    </td>
+    <td class="${user.enabled ? "enabled" : "disabled"}">
+        ${user.enabled ? "Sí" : "No"}
+    </td>
+`;
+
+            tbody.appendChild(row);
+          });
+        } catch (error) {
+          console.error("Error al obtener los usuarios:", error);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", fetchUsers);
+    </script>
+  </body>
+</html>
