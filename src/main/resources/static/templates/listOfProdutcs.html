@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Productos</title>
+    <style>
+      /* Configuración general */
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Alinea el contenido arriba */
+        padding: 20px;
+      }
+
+      /* Título */
+      h2 {
+        color: #333;
+        font-size: 26px;
+        margin-bottom: 15px;
+        margin-top: 0; /* Se mantiene pegado al top */
+      }
+
+      /* Contenedor de la tabla */
+      .table-container {
+        width: 100%;
+        max-height: 60vh;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        background: white;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Tabla */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+      }
+
+      thead {
+        position: sticky;
+        top: 0;
+        background-color: #4c53af;
+        z-index: 10;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      th,
+      td {
+        padding: 14px;
+        text-align: left;
+        font-size: 18px;
+      }
+
+      th {
+        background-color: #6666dc;
+        color: white;
+        font-weight: bold;
+      }
+
+      td {
+        border-bottom: 1px solid #ddd;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #f4f4f4;
+      }
+
+      tbody tr:hover {
+        background-color: #dfdfdf;
+      }
+
+      tbody {
+        display: block;
+        max-height: calc(60vh - 60px);
+        overflow-y: auto;
+      }
+
+      thead,
+      tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+
+      /* Botón de eliminar */
+      .btn-delete {
+        background-color: #d9534f;
+        color: white;
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .btn-delete:hover {
+        background-color: #c9302c;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Gestión de Productos</h2>
+
+    <!-- Tabla de productos -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Descripción</th>
+            <th>SKU</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="productTable"></tbody>
+      </table>
+    </div>
+
+    <script>
+      const API_URL = "http://localhost:8080/api/products";
+
+      async function loadProducts() {
+        try {
+          const response = await fetch(API_URL);
+          const data = await response.json();
+          const tableBody = document.getElementById("productTable");
+          tableBody.innerHTML = "";
+
+          data.forEach((product, index) => {
+            const row = `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${product.name}</td>
+                            <td>$${product.price}</td>
+                            <td>${product.description}</td>
+                            <td>${product.sku}</td>
+                            <td>
+                                <button class="btn-delete" onclick="deleteProduct(${
+                                  product.id
+                                })">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+            tableBody.innerHTML += row;
+          });
+        } catch (error) {
+          console.error("Error al cargar productos:", error);
+        }
+      }
+
+      async function deleteProduct(id) {
+        if (!confirm("¿Seguro que deseas eliminar este producto?")) return;
+        try {
+          const response = await fetch(`${API_URL}/${id}`, {
+            method: "DELETE",
+          });
+          if (response.ok) loadProducts();
+        } catch (error) {
+          console.error("Error al eliminar producto:", error);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", loadProducts);
+    </script>
+  </body>
+</html>
