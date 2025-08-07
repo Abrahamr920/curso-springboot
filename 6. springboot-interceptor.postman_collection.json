@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "27db75d9-1553-4830-8a96-2938f506529a",
+		"name": "6. springboot-interceptor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21637909",
+		"_collection_link": "https://solar-escape-794152.postman.co/workspace/Team-Workspace~d43b0683-7d45-4e3d-823f-63d99e9f2520/collection/21637909-27db75d9-1553-4830-8a96-2938f506529a?action=share&source=collection_link&creator=21637909"
+	},
+	"item": [
+		{
+			"name": "Foo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/app/foo",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"app",
+						"foo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/app/bar",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"app",
+						"bar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Baz",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/app/baz",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"app",
+						"baz"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
