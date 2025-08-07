@@ -1,0 +1,64 @@
+# --- Java ---
+*.class
+*.jar
+*.war
+*.ear
+
+# --- Logs ---
+*.log
+logs/
+log/
+
+# --- System files ---
+.DS_Store
+Thumbs.db
+
+# --- Compiled files ---
+/target/
+/build/
+
+# --- IDEs & editors ---
+# VS Code
+.vscode/
+
+
+# --- Maven & Gradle ---
+.mvn/
+!**/src/main/**/.gitkeep
+!**/src/test/**/.gitkeep
+
+# Maven Wrapper
+.mvn/
+mvnw
+mvnw.cmd
+
+# Gradle Wrapper
+.gradle/
+build/
+gradlew
+gradlew.bat
+
+# --- Spring Boot ---
+# (any generated dev files)
+spring.log
+
+# --- Environment ---
+.env
+*.env
+
+# --- OS generated files ---
+ehthumbs.db
+Icon?
+Desktop.ini
+*.swp
+*.swo
+
+# --- Testing ---
+/test-output/
+/jacoco.exec
+
+# --- Others ---
+*.tmp
+*.bak
+*.backup
+*.old
