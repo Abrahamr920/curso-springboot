@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD de Productos</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f4f4f4;
+      }
+      .btn {
+        padding: 5px 10px;
+        cursor: pointer;
+        border: none;
+      }
+      .btn-edit {
+        background-color: #f0ad4e;
+        color: white;
+      }
+      .btn-delete {
+        background-color: #d9534f;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Gestión de Productos</h2>
+    <form id="productForm">
+      <input type="hidden" id="productId" />
+      <input type="text" id="productName" placeholder="Nombre" required />
+      <input type="number" id="productPrice" placeholder="Precio" required />
+      <input
+        type="text"
+        id="productDescription"
+        placeholder="Descripción"
+        required
+      />
+      <input type="text" id="productSku" placeholder="SKU" required />
+      <button type="submit">Guardar</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Descripción</th>
+          <th>SKU</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="productTable"></tbody>
+    </table>
+
+    <script>
+      const API_URL = "http://localhost:8080/api/products";
+
+      async function loadProducts() {
+        try {
+          const response = await fetch(API_URL);
+          const data = await response.json();
+          const tableBody = document.getElementById("productTable");
+          tableBody.innerHTML = "";
+          data.forEach((product, index) => {
+            const row = `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${product.name}</td>
+                            <td>$${product.price}</td>
+                            <td>${product.description}</td>
+                            <td>${product.sku}</td>
+                            <td>
+                                <button class="btn btn-edit" onclick="editProduct(${
+                                  product.id
+                                })">Editar</button>
+                                <button class="btn btn-delete" onclick="deleteProduct(${
+                                  product.id
+                                })">Eliminar</button>
+                            </td>
+                        </tr>
+                    `;
+            tableBody.innerHTML += row;
+          });
+        } catch (error) {
+          console.error("Error al cargar productos:", error);
+        }
+      }
+
+      document
+        .getElementById("productForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const id = document.getElementById("productId").value;
+          const product = {
+            name: document.getElementById("productName").value,
+            price: document.getElementById("productPrice").value,
+            description: document.getElementById("productDescription").value,
+            sku: document.getElementById("productSku").value,
+          };
+
+          try {
+            let response;
+            if (id) {
+              response = await fetch(`${API_URL}/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(product),
+              });
+            } else {
+              response = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(product),
+              });
+            }
+            if (response.ok) {
+              loadProducts();
+              document.getElementById("productForm").reset();
+              document.getElementById("productId").value = "";
+            }
+          } catch (error) {
+            console.error("Error al guardar producto:", error);
+          }
+        });
+
+      async function editProduct(id) {
+        try {
+          const response = await fetch(`${API_URL}/${id}`);
+          const product = await response.json();
+          document.getElementById("productId").value = product.id;
+          document.getElementById("productName").value = product.name;
+          document.getElementById("productPrice").value = product.price;
+          document.getElementById("productDescription").value =
+            product.description;
+          document.getElementById("productSku").value = product.sku;
+        } catch (error) {
+          console.error("Error al cargar producto para edición:", error);
+        }
+      }
+
+      async function deleteProduct(id) {
+        if (!confirm("¿Seguro que deseas eliminar este producto?")) return;
+        try {
+          const response = await fetch(`${API_URL}/${id}`, {
+            method: "DELETE",
+          });
+          if (response.ok) loadProducts();
+        } catch (error) {
+          console.error("Error al eliminar producto:", error);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", loadProducts);
+    </script>
+  </body>
+</html>
