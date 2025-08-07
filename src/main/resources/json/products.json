@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Leche",
+    "price": 2
+  },
+  {
+    "name": "Pan",
+    "price": 1
+  },
+  {
+    "name": "Huevos",
+    "price": 3
+  },
+  {
+    "name": "Café",
+    "price": 5
+  }
+]

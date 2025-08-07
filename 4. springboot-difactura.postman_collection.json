@@ -1,0 +1,34 @@
+{
+	"info": {
+		"_postman_id": "af1acaf6-20da-41a9-9c8c-e933158cff28",
+		"name": "4. springboot-difactura",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21637909",
+		"_collection_link": "https://solar-escape-794152.postman.co/workspace/Team-Workspace~d43b0683-7d45-4e3d-823f-63d99e9f2520/collection/21637909-af1acaf6-20da-41a9-9c8c-e933158cff28?action=share&source=collection_link&creator=21637909"
+	},
+	"item": [
+		{
+			"name": "Show",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/invoices/show",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"invoices",
+						"show"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
