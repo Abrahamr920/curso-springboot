@@ -1,0 +1,55 @@
+{
+	"info": {
+		"_postman_id": "2c49fe08-98a4-4f13-beff-17bfd7b2c84a",
+		"name": "8. springboot-aop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21637909",
+		"_collection_link": "https://solar-escape-794152.postman.co/workspace/Team-Workspace~d43b0683-7d45-4e3d-823f-63d99e9f2520/collection/21637909-2c49fe08-98a4-4f13-beff-17bfd7b2c84a?action=share&source=collection_link&creator=21637909"
+	},
+	"item": [
+		{
+			"name": "Greeting",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/greetting",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"greetting"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GreetingError",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/greettingError",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"greettingError"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
