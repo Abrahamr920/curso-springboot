@@ -1,0 +1,6 @@
+[
+  { "id": 1, "name": "Play Station 5", "price": 700 },
+  { "id": 2, "name": "Abrigo Old Navy", "price": 80 },
+  { "id": 3, "name": "AF1", "price": 100.0 },
+  { "id": 4, "name": "Monitor 1440p", "price": 250.0 }
+]
