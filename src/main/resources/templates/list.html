@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+</head>
+<body>
+    <h1 th:text="${title}"></h1>
+    <div th:if="${users.isEmpty()}" th:text="${'Lista de usuarios vacía.'}"></div>
+    <table th:if="${!users.isEmpty()}">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Lastname</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user: ${users}">
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.lastname}"></td>
+                <td th:if="${user.email}" th:text="${user.email}"></td>
+                <td th:if="${user.email == null}" th:text="${' - '}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/details}">Ver Detalles</a>
+    <br>
+    <a th:href="@{/api/params/foo?message=Vienes de List.}">Ver Mensaje</a>
+    <br>
+    <a th:href="@{/api/params/foo(message='Vienes de List.')}">Ver Mensaje 2</a>
+    <br>
+    <a th:href="@{http://127.0.0.1:8080/api/params/bar?text=Esto es un mensaje.&code=787984}">Ver Bar</a>
+    <br>
+    <a th:href="@{'/api/var/baz/' + ${title}}">Ver Var Path Variable</a>
+</body>
+</html>
