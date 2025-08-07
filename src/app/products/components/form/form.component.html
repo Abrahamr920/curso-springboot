@@ -1,0 +1,81 @@
+<form (ngSubmit)="onSubmit(productForm)" #productForm="ngForm">
+  <div>
+    <!-- <input
+      type="number"
+      readOnly
+      class="form-control my-3 w-75"
+      name="id"
+      placeholder="ID"
+      [(ngModel)]="product.id"
+    /> -->
+
+    <div>
+      <input
+        type="text"
+        class="form-control my-3 w-75"
+        name="name"
+        placeholder="Name"
+        [(ngModel)]="product.name"
+        #name="ngModel"
+        required
+      />
+      <div
+        *ngIf="name.invalid && (name.dirty || name.touched)"
+        class="alert alert-danger"
+      >
+        <div>Name is Required</div>
+      </div>
+    </div>
+    <div>
+      <input
+        type="text"
+        class="form-control my-3 w-75"
+        name="description"
+        placeholder="Description"
+        [(ngModel)]="product.description"
+        #description="ngModel"
+        required
+      />
+      <div
+        *ngIf="
+          description.invalid && (description.dirty || description.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div>Description is Required</div>
+      </div>
+    </div>
+
+    <div>
+      <input
+        type="number"
+        class="form-control my-3 w-75"
+        name="price"
+        placeholder="0"
+        [(ngModel)]="product.price"
+        #price="ngModel"
+        required
+        min="5"
+      />
+      <div
+        *ngIf="price.invalid && (price.dirty || price.touched)"
+        class="alert alert-danger"
+      >
+        @if (price.errors!['required']) {
+        <div>Price is Required</div>
+        } @else if (price.errors!['min']) {
+        <div>Price must be at least 5</div>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center w-75">
+    <button
+      [disabled]="!productForm.form.valid"
+      type="submit"
+      class="btn btn-primary w-50"
+    >
+      {{ product.id > 0 ? "Update" : "Save" }}
+    </button>
+  </div>
+</form>

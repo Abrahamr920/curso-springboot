@@ -1,0 +1,54 @@
+<body class="d-flex justify-content-center align-items-center vh-100">
+  <div class="p-4 border rounded shadow bg-light me-5">
+    <h2 class="text-center">List of Products</h2>
+    @if (products.length>0) {
+    <table class="table table-striped table-hover table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (p of products; track $index) {
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.name }}</td>
+          <td>{{ p.description }}</td>
+          <td>${{ p.price }}</td>
+          <td>
+            <button
+              class="btn btn-secondary btn-sm me-2"
+              (click)="onUpdateProduct(p)"
+            >
+              <i class="fas fa-edit"></i> Editar
+            </button>
+
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="onDeleteProduct(p.id)"
+            >
+              <i class="fas fa-trash"></i> Eliminar
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    }@else {
+    <div class="alert alert-warning">Table Products is empty.</div>
+    }
+  </div>
+
+  <div class="p-4 border rounded shadow bg-light">
+    <h2 class="text-center">List of Products</h2>
+    <product-form
+      (newProductEvent)="addProduct($event)"
+      [product]="productSelected"
+    ></product-form>
+  </div>
+</body>
