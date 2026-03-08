@@ -28,9 +28,9 @@ Thumbs.db
 !**/src/test/**/.gitkeep
 
 # Maven Wrapper
-.mvn/
-mvnw
-mvnw.cmd
+# .mvn/
+# mvnw
+# mvnw.cmd
 
 # Gradle Wrapper
 .gradle/
