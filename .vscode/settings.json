@@ -1,4 +1,5 @@
 {
-  "cSpell.words": ["milisegundos"],
-  "java.dependency.packagePresentation": "hierarchical"
+  "cSpell.words": ["jjwt", "milisegundos"],
+  "java.dependency.packagePresentation": "hierarchical",
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
