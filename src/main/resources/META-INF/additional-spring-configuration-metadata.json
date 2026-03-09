@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "app.db.timing.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Habilita o deshabilita el rastreo del tiempo de ejecución de las consultas a la base de datos."
+    },
+    {
+      "name": "app.db.timing.warn-threshold-ms",
+      "type": "java.lang.Long",
+      "description": "Umbral en milisegundos para disparar una advertencia si una consulta tarda demasiado."
+    }
+  ]
+}
